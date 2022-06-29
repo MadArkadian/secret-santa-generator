@@ -38,8 +38,8 @@ const CreateGroup: NextPage = () => {
             console.log(key, value);
             addPerson.mutate({
                 key: group_key,
-                giver: key,
-                receiver: value,
+                giver: key.toLowerCase(),
+                receiver: value.toLowerCase(),
             });
         });
 
