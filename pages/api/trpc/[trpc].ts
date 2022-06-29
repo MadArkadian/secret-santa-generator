@@ -29,7 +29,9 @@ export const appRouter = trpc
         }),
         async resolve({ input }) {
             try {
-                const { key, giver, receiver } = input;
+                const key = input.key;
+                const giver = input.giver.toLowerCase();
+                const receiver = input.receiver.toLowerCase();
                 const group = await prisma.group.create({
                     data: {
                         key,
