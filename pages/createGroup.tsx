@@ -101,7 +101,7 @@ const CreateGroup: NextPage = () => {
         <div className='flex flex-col'>
             <h1 className='flex text-3xl justify-center text-center mb-10 mt-5'>Create Group</h1>
             <form className='flex flex-col justify-center items-center' onSubmit={(e) => { generateGroup(e) }}>
-                <label className='flex justify-center mb-5'>Enter Everyone's Name</label>
+                <label className='flex justify-center mb-5'>Enter Everyone&apos;s Name</label>
                 {people}
                 <button type='submit' className='inline-flex justify-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-700 bg-blue-300 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                     Generate Group
