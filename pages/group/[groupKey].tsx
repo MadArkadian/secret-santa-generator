@@ -35,7 +35,7 @@ const GroupKey: NextPage = () => {
                 </button>}
             </form>
             {getReceiver.data && findName && (
-                <span className='flex flex-col justify-center items-center capitalize'>You're getting a gift for: {getReceiver.data.receiver}</span>
+                <span className='flex flex-col justify-center items-center capitalize'>You&apos;re getting a gift for: {getReceiver.data.receiver}</span>
             )}
         </div>
     );
