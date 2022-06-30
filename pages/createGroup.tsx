@@ -35,7 +35,6 @@ const CreateGroup: NextPage = () => {
         const group_key = generateGroupKey(10);
         //console.log(group_key);
         people_dict.forEach((value, key) => {
-            console.log(key, value);
             addPerson.mutate({
                 key: group_key,
                 giver: key.toLowerCase(),

@@ -42,7 +42,7 @@ const GroupKey: NextPage = () => {
                 </button>
             </form>
             {getReceiver.data && findName && (
-                <span className='flex flex-col justify-center items-center'>{getReceiver.data.receiver}</span>
+                <span className='flex flex-col justify-center items-center capitalize'>{getReceiver.data.receiver}</span>
             )}
         </div>
     );
