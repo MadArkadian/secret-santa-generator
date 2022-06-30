@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { trpc } from '../utils/trpc';
@@ -98,6 +99,9 @@ const CreateGroup: NextPage = () => {
 
     return (
         <div className='flex flex-col'>
+            <Head>
+                <title>Create Group</title>
+            </Head>
             <h1 className='flex text-3xl justify-center text-center mb-10 mt-5'>Create Group</h1>
             <form className='flex flex-col justify-center items-center' onSubmit={(e) => { generateGroup(e) }}>
                 <label className='flex justify-center mb-5'>Enter Everyone&apos;s Name</label>

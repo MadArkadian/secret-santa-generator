@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import { trpc } from '../../utils/trpc';
+import Head from "next/head";
 
 type Form = {
     key: string;
@@ -13,7 +14,6 @@ const GroupKey: NextPage = () => {
     const router = useRouter();
     const { groupKey } = router.query;
     const [giverName, setGiverName] = React.useState('');
-    const [receiverName, setReceiverName] = React.useState('');
     const [findName, setFindName] = React.useState(false);
 
     if (!groupKey || typeof groupKey !== 'string') {
@@ -23,6 +23,9 @@ const GroupKey: NextPage = () => {
 
     return (
         <div className='flex flex-col'>
+            <Head>
+                <title>Group: {groupKey}</title>
+            </Head>
             <h1 className='flex text-3xl justify-center text-center mb-10 mt-5'>Welcome to your Group!</h1>
             <form className='flex flex-col justify-center items-center'>
                 <label className='flex justify-center mb-5'>Enter Your Name Here</label>

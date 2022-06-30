@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { MouseEvent, useState } from 'react';
 
@@ -16,6 +17,9 @@ const Home: NextPage = () => {
     }
     return (
         <div>
+            <Head>
+                <title>Secret Santa Generator</title>
+            </Head>
             <h1 className="flex text-3xl font-bold justify-center pt-5 pb-10">Secret Santa Generator!</h1>
             <div className='flex flex-col items-center h-screen'>
                 <button onClick={() => { router.push(`/createGroup`) }} type="button" className='inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-700 bg-blue-300 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
