@@ -21,6 +21,20 @@ export const appRouter = trpc
             return receiver;
         },
     })
+    .query("checkKey", {
+        input: z.object({
+            key: z.string(),
+        }),
+        async resolve({ input }) {
+            const { key } = input;
+            const check = await prisma.group.findFirst({
+                where: {
+                    key
+                }
+            });
+            return check;
+        }
+    })
     .mutation("addPerson", {
         input: z.object({
             key: z.string(),
