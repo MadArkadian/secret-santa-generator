@@ -35,6 +35,20 @@ export const appRouter = trpc
             return check;
         }
     })
+    .query("showGroup", {
+        input: z.object({
+            key: z.string(),
+        }),
+        async resolve({ input }) {
+            const { key } = input;
+            const group = await prisma.group.findMany({
+                where: {
+                    key
+                }
+            });
+            return group;
+        }
+    })
     .mutation("addPerson", {
         input: z.object({
             key: z.string(),
@@ -46,7 +60,7 @@ export const appRouter = trpc
                 const key = input.key;
                 const giver = input.giver.toLowerCase();
                 const receiver = input.receiver.toLowerCase();
-                const group = await prisma.group.create({
+                await prisma.group.create({
                     data: {
                         key,
                         giver,
@@ -56,6 +70,19 @@ export const appRouter = trpc
             } catch (e) {
                 console.log(e);
             }
+        }
+    })
+    .mutation("removeGroup", {
+        input: z.object({
+            key: z.string(),
+        }),
+        async resolve({ input }) {
+            const { key } = input;
+            await prisma.group.deleteMany({
+                where: {
+                    key
+                }
+            });
         }
     });
 

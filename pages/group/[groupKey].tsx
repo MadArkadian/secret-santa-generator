@@ -16,16 +16,23 @@ const GroupKey: NextPage = () => {
     const [giverName, setGiverName] = React.useState('');
     const [findName, setFindName] = React.useState(false);
     const [copied, setCopied] = React.useState(false);
+    const [showResults, setShowResults] = React.useState(false);
+    const [groupDeleted, setGroupDeleted] = React.useState(false);
 
     if (!groupKey || typeof groupKey !== 'string') {
         return <div>Invalid Group Key</div>;
     }
     const getReceiver = trpc.useQuery(["getReceiver", { key: groupKey, giver: giverName }]);
     const checkKey = trpc.useQuery(["checkKey", { key: groupKey }]);
-    if (checkKey.isLoading || getReceiver.isLoading) {
-        return <div>Loading...</div>;
+    const showGroup = trpc.useQuery(["showGroup", { key: groupKey }]);
+    const removeGroup = trpc.useMutation(["removeGroup"]);
+
+    if (groupDeleted) {
+        return (<div className='flex flex-col'>
+            <h1 className='flex text-3xl justify-center text-center mt-5'>Group Deleted</h1>
+        </div>);
     }
-    if (!checkKey.data) {
+    if (!checkKey.data && !checkKey.isLoading) {
         return (
             <div className='flex flex-col'>
                 <Head>
@@ -41,13 +48,18 @@ const GroupKey: NextPage = () => {
         setCopied(true);
     }
 
+    const deleteGroup = () => {
+        removeGroup.mutate({ key: groupKey });
+        setGroupDeleted(true);
+    }
+
     return (
         <div className='flex flex-col'>
             <Head>
                 <title>Group: {groupKey}</title>
             </Head>
             <h1 className='flex text-3xl justify-center text-center mb-10 mt-5'>Welcome to your Group!</h1>
-            <span onClick={() => copyToClipboard()} className={`flex font-bold ${!copied && 'hover:cursor-pointer'} justify-center text-center mb-10`}>
+            <span onClick={() => copyToClipboard()} className={`flex font-bold ${!copied && 'hover:cursor-pointer'} justify-center text-center mb-10 text-xs`}>
                 https://www.secretsantacreator.com/group/{groupKey}
                 {copied && (<span className="flex text-gray-400 justify-center text-center">&nbsp;Copied</span>)}
             </span>
@@ -59,12 +71,32 @@ const GroupKey: NextPage = () => {
                 </button>}
             </form>
             {getReceiver.data && findName && (
-                <span className='flex flex-col justify-center items-center capitalize'>You&apos;re getting a gift for: {getReceiver.data.receiver}</span>
+                <span className='flex flex-col justify-center items-center capitalize mb-3'>You&apos;re getting a gift for: {getReceiver.data.receiver}</span>
             )}
+            {!showResults && (
+                <div className='flex flex-col justify-center items-center mt-3'>
+                    <button className="justify-center items-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-700 bg-blue-300 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={() => { setShowResults(true) }}>Show Group Result</button>
+                    <span className="flex flex-col justify-center items-center text-red-600 w-[10rem] text-center">Note: This will show you the group results (who was giver and who was receiver)</span>
+                </div>
+            )}
+            {showResults && showGroup.data && (
+                <div className='flex flex-col justify-center items-center mt-3'>
+                    {showGroup.data.map(value => {
+                        return (
+                            <div className='flex flex-col justify-center items-center mb-3'>
+                                <span className='flex justify-center text-center'>Giver: {value.giver}</span>
+                                <span className='flex justify-center text-center'>Receiver: {value.receiver}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+            <div className='flex flex-col justify-center items-center mt-10'>
+                <button className="justify-center items-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-100 bg-red-600 hover:bg-red-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={() => { deleteGroup() }}>Delete Group</button>
+                <span className="flex flex-col justify-center items-center text-red-600 w-[10rem] text-center">Note: This will remove your group, this operation is permanent</span>
+            </div>
         </div>
     );
 }
 
 export default GroupKey;
-
-// <span className='flex justify-center text-center'>{groupKey}</span>
