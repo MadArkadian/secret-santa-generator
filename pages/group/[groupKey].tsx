@@ -81,11 +81,11 @@ const GroupKey: NextPage = () => {
             )}
             {showResults && showGroup.data && (
                 <div className='flex flex-col justify-center items-center mt-3'>
-                    {showGroup.data.map(value => {
+                    {showGroup.data.map((value, index) => {
                         return (
-                            <div className='flex flex-col justify-center items-center mb-3'>
-                                <span className='flex justify-center text-center'>Giver: {value.giver}</span>
-                                <span className='flex justify-center text-center'>Receiver: {value.receiver}</span>
+                            <div key={index} className='flex flex-col justify-center items-center mb-3'>
+                                <span key={index} className='flex justify-center text-center'>Giver: {value.giver}</span>
+                                <span key={index} className='flex justify-center text-center'>Receiver: {value.receiver}</span>
                             </div>
                         );
                     })}
