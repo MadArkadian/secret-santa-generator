@@ -91,10 +91,6 @@ const GroupKey: NextPage = () => {
                     })}
                 </div>
             )}
-            <div className='flex flex-col justify-center items-center mt-10'>
-                <button className="justify-center items-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-100 bg-red-600 hover:bg-red-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={() => { deleteGroup() }}>Delete Group</button>
-                <span className="flex flex-col justify-center items-center text-red-600 w-[10rem] text-center">Note: This will remove your group, this operation is permanent</span>
-            </div>
         </div>
     );
 }

@@ -21,7 +21,11 @@ const CreateGroup: NextPage = () => {
         setAmountOfPeople(value);
     }
 
-    const generateGroup = (e: React.FormEvent<HTMLFormElement>) => {
+    function sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    const generateGroup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const childNodes = e.currentTarget.childNodes as NodeListOf<HTMLInputElement>;
         let names: any[] = [];
@@ -42,6 +46,8 @@ const CreateGroup: NextPage = () => {
                 receiver: value.toLowerCase(),
             });
         });
+        // wiggle room to ensure key goes through
+        await sleep(1000);
 
         router.push(`/group/${group_key}`);
     }
