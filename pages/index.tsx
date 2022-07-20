@@ -9,7 +9,7 @@ const Home: NextPage = () => {
     const router = useRouter();
     const checkGroup = async () => {
         const group = await fetch(`/api/group/${key}`);
-        if (group.status === 400) {
+        if (group.status === 400 || group.status === 500) {
             setError('Group does not exist');
             return
         }

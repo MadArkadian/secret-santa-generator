@@ -17,7 +17,6 @@ const GroupKey: NextPage = () => {
     const [findName, setFindName] = React.useState(false);
     const [copied, setCopied] = React.useState(false);
     const [showResults, setShowResults] = React.useState(false);
-    const [groupDeleted, setGroupDeleted] = React.useState(false);
 
     if (!groupKey || typeof groupKey !== 'string') {
         return <div>Invalid Group Key</div>;
@@ -25,13 +24,7 @@ const GroupKey: NextPage = () => {
     const getReceiver = trpc.useQuery(["getReceiver", { key: groupKey, giver: giverName }]);
     const checkKey = trpc.useQuery(["checkKey", { key: groupKey }]);
     const showGroup = trpc.useQuery(["showGroup", { key: groupKey }]);
-    const removeGroup = trpc.useMutation(["removeGroup"]);
 
-    if (groupDeleted) {
-        return (<div className='flex flex-col'>
-            <h1 className='flex text-3xl justify-center text-center mt-5'>Group Deleted</h1>
-        </div>);
-    }
     if (!checkKey.data && !checkKey.isLoading) {
         return (
             <div className='flex flex-col'>
@@ -46,11 +39,6 @@ const GroupKey: NextPage = () => {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(`https://www.secretsantacreator.com/group/${groupKey}`);
         setCopied(true);
-    }
-
-    const deleteGroup = () => {
-        removeGroup.mutate({ key: groupKey });
-        setGroupDeleted(true);
     }
 
     return (
