@@ -31,14 +31,16 @@ const CreateGroup: NextPage = () => {
         let names: any[] = [];
         let people: string[] = [];
         for (let i = 1; i < childNodes.length - 1; i++) {
+            if (childNodes[i].value.length === 0) {
+                setError("All input fields must have a name");
+                return;
+            }
             names.push([i - 1, childNodes[i].value]);
             people.push(childNodes[i].value);
         }
         const people_dict = generateList(names as [], people);
-        //console.log(people_dict);
-        // generate 10 character random string
+        // generate a 10 character random string
         const group_key = generateGroupKey(10);
-        //console.log(group_key);
         people_dict.forEach((value, key) => {
             addPerson.mutate({
                 key: group_key,
@@ -109,6 +111,7 @@ const CreateGroup: NextPage = () => {
                 <title>Create Group</title>
             </Head>
             <h1 className='flex text-3xl justify-center text-center mb-10 mt-5'>Create Group</h1>
+            <span className='flex flex-col justify-center items-center text-red-500 text-xl'>{error}</span>
             <form className='flex flex-col justify-center items-center' onSubmit={(e) => { generateGroup(e) }}>
                 <label className='flex justify-center mb-5'>Enter Everyone&apos;s Name</label>
                 {people}
