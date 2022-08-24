@@ -14,6 +14,10 @@ const CreateGroup: NextPage = () => {
     let router = useRouter();
 
     const validateNumber = (value: number) => {
+        if (isNaN(value)) {
+            setError('Please enter a number');
+            return;
+        }
         if (value <= 1) {
             setError('Amount of people must be greater than 1');
             return;

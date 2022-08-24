@@ -36,6 +36,17 @@ const GroupKey: NextPage = () => {
         );
     }
 
+    if (showGroup.data?.length === 0 && !showGroup.isLoading) {
+        return (
+            <div className='flex flex-col'>
+                <Head>
+                    <title>Group: {groupKey}</title>
+                </Head>
+                <h1 className='flex text-3xl justify-center text-center mt-5'>Invalid Group Key: {groupKey}</h1>
+            </div>
+        );
+    }
+
     const copyToClipboard = () => {
         navigator.clipboard.writeText(`https://www.secretsantacreator.com/group/${groupKey}`);
         setCopied(true);
